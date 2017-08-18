@@ -18,8 +18,12 @@ class AzureCSharedUtilityConan(ConanFile):
     def source(self):
         tools.get("https://github.com/Azure/azure-c-shared-utility/archive/%s.tar.gz" % self.version)
 
+    def requirements(self):
+        if self.settings.os == "Linux":
+            self.requires.add("OpenSSL/1.0.2l@conan/stable")
+
     def system_requirements(self):
-        # libcurl is required
+        # libcurl and uuid are required on Linux
         if self.settings.os == "Linux":
             package_tool = tools.SystemPackageTool()
             package_tool.install(packages="libcurl4-gnutls-dev uuid-dev", update=True)
@@ -31,6 +35,8 @@ class AzureCSharedUtilityConan(ConanFile):
     '''
         tools.replace_in_file("%s/CMakeLists.txt" % self.release_name, "project(azure_c_shared_utility)", conan_magic_lines)
         cmake = CMake(self)
+        cmake.definitions["skip_samples"] = True
+        cmake.definitions["build_as_dynamic"] = self.options.shared
         cmake.configure(source_dir=self.release_name)
         cmake.build()
 

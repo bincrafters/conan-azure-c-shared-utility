@@ -1,5 +1,6 @@
 from conans import ConanFile, CMake
 import os
+import platform
 
 
 class AzurecsharedutilityTestConan(ConanFile):
@@ -20,4 +21,7 @@ class AzurecsharedutilityTestConan(ConanFile):
 
     def test(self):
         os.chdir("bin")
-        self.run("./iot_c_utility")
+        if platform.system() == "Windows":
+            self.run("iot_c_utility.exe")
+        else:
+            self.run("./iot_c_utility")
