@@ -1,0 +1,1 @@
+conan upload --all --remote bincrafters Azure-C-Shared-Utility/2017-08-11@bincrafters/testing

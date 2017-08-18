@@ -3,14 +3,14 @@ from conans import ConanFile, CMake, tools
 
 
 class AzureCSharedUtilityConan(ConanFile):
-    name = "azure-c-shared-utility"
+    name = "Azure-C-Shared-Utility"
     version = "2017-08-11"
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     url = "https://github.com/bincrafters/conan-azure-c-shared-utility"
     license = "https://github.com/Azure/azure-c-shared-utility/blob/master/LICENSE"
     description = "Azure C SDKs common code"
-    release_name = "%s-%s" % (name, version)
+    release_name = "%s-%s" % (name.lower(), version)
     options = {"shared": [True, False]}
     default_options = "shared=True"
     exports = ["LICENSE"]
