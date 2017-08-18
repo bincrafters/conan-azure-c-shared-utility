@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, os
 
 
 class AzureCSharedUtilityConan(ConanFile):
-    name = "Azure-C-Shared-Utility"
+    name = "Azure-C-Utility"
     version = "1.0.41"
     generators = "cmake" 
     settings = "os", "arch", "compiler", "build_type"
@@ -23,12 +23,16 @@ class AzureCSharedUtilityConan(ConanFile):
         cmake.build()
         
     def package(self):
-        include_dir = os.path.join(
-            self.lib_short_name, "inc", self.lib_short_name.replace("-","_"))
-            
+        include_dir = os.path.join(self.lib_short_name, "inc")
+        
+        config_dir = os.path.join(self.lib_short_name, "configs")
+                       
         self.copy(pattern="*", dst="include", src=include_dir)
         self.copy(pattern="*.lib", dst="lib", src="")
+        self.copy(pattern="azure_c_shared_utilityFunctions.cmake", dst="res", src=config_dir)
 
     def package_info(self):
-        self.cpp_info.libs = self.collect_libs()
+        self.cpp_info.libs = ["aziotsharedutil"]
+        self.cpp_info.libdirs = ["lib"]
+        self.cpp_info.resdirs = ["res"]
 
