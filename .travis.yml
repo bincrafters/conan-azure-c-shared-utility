@@ -1,7 +1,7 @@
 
 env:
    global:
-     - CONAN_REFERENCE: "Azure-C-Shared-Utility/2017-08-11"
+     - CONAN_REFERENCE: "Azure-C-Shared-Utility/1.0.41"
      - CONAN_USERNAME: "bincrafters"
      - CONAN_CHANNEL: "ci"
      - CONAN_UPLOAD: "https://api.bintray.com/conan/bincrafters/public-conan"
