@@ -13,7 +13,7 @@ class AzureCSharedUtilityConan(ConanFile):
     release_name = "%s-%s" % (name.lower(), version)
     options = {"shared": [True, False]}
     default_options = "shared=True"
-    exports = ["LICENSE"]
+    exports = ["LICENSE", "Findazure_c_shared_utility.cmake"]
 
     def source(self):
         tools.get("https://github.com/Azure/azure-c-shared-utility/archive/%s.tar.gz" % self.version)
@@ -43,7 +43,7 @@ class AzureCSharedUtilityConan(ConanFile):
     def package(self):
         self.copy(pattern="LICENSE", dst=".", src=".")
         self.copy(pattern="*", dst="include", src=path.join(self.release_name, "inc"))
-        self.copy(pattern="azure_c_shared_utilityFunctions.cmake", dst="res", src=path.join(self.release_name, "configs"))
+        self.copy(pattern="*.cmake", dst="res", src=path.join(self.release_name, "configs"))
         self.copy(pattern="*.lib", dst="lib", src="lib", keep_path=False)
         self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
         self.copy(pattern="*.a", dst="lib", src="lib", keep_path=False)
