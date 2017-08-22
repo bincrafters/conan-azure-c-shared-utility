@@ -19,7 +19,7 @@ class AzureCSharedUtilityConan(ConanFile):
         tools.get("https://github.com/Azure/azure-c-shared-utility/archive/%s.tar.gz" % self.version)
 
     def requirements(self):
-        if self.settings.os == "Linux":
+        if self.settings.os == "Linux" or self.settings.os == "Macos":
             self.requires.add("OpenSSL/1.0.2l@conan/stable")
 
     def system_requirements(self):
