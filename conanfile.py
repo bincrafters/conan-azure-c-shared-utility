@@ -4,7 +4,7 @@ from conans import ConanFile, CMake, tools
 
 class AzureCSharedUtilityConan(ConanFile):
     name = "Azure-C-Shared-Utility"
-    version = "2017-08-11"
+    version = "1.0.41"
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     url = "https://github.com/bincrafters/conan-azure-c-shared-utility"
@@ -13,20 +13,20 @@ class AzureCSharedUtilityConan(ConanFile):
     release_name = "%s-%s" % (name.lower(), version)
     options = {"shared": [True, False]}
     default_options = "shared=True"
-    exports = ["LICENSE"]
+    exports = ["LICENSE", "azure_c_shared_utilityConfig.cmake"]
 
     def source(self):
         tools.get("https://github.com/Azure/azure-c-shared-utility/archive/%s.tar.gz" % self.version)
 
     def requirements(self):
-        if self.settings.os == "Linux":
+        if self.settings.os == "Linux" or self.settings.os == "Macos":
             self.requires.add("OpenSSL/1.0.2l@conan/stable")
 
     def system_requirements(self):
         # libcurl and uuid are required on Linux
         if self.settings.os == "Linux":
             package_tool = tools.SystemPackageTool()
-            package_tool.install(packages="libcurl4-gnutls-dev uuid-dev", update=True)
+            package_tool.install(packages="libcurl4-gnutls-dev uuid-dev pkg-config", update=True)
 
     def build(self):
         conan_magic_lines = '''project(azure_c_shared_utility)
@@ -43,6 +43,7 @@ class AzureCSharedUtilityConan(ConanFile):
     def package(self):
         self.copy(pattern="LICENSE", dst=".", src=".")
         self.copy(pattern="*", dst="include", src=path.join(self.release_name, "inc"))
+        self.copy(pattern="azure_c_shared_utilityConfig.cmake", dst="res", src=".")
         self.copy(pattern="azure_c_shared_utilityFunctions.cmake", dst="res", src=path.join(self.release_name, "configs"))
         self.copy(pattern="*.lib", dst="lib", src="lib", keep_path=False)
         self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
