@@ -8,7 +8,7 @@ class AzurecsharedutilityTestConan(ConanFile):
     generators = "cmake"
     user = os.getenv("CONAN_USERNAME", "bincrafters")
     channel = os.getenv("CONAN_CHANNEL", "testing")
-    requires = "Azure-C-Shared-Utility/2017-08-11@%s/%s" % (user, channel)
+    requires = "Azure-C-Shared-Utility/1.0.41@%s/%s" % (user, channel)
 
     def build(self):
         cmake = CMake(self)
