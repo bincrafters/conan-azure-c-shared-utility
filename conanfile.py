@@ -4,7 +4,7 @@ from conans import ConanFile, CMake, tools
 
 class AzureCSharedUtilityConan(ConanFile):
     name = "Azure-C-Shared-Utility"
-    version = "2017-08-11"
+    version = "1.0.41"
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     url = "https://github.com/bincrafters/conan-azure-c-shared-utility"
