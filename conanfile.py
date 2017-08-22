@@ -54,7 +54,7 @@ class AzureCSharedUtilityConan(ConanFile):
         self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
         self.copy(pattern="*.a", dst="lib", src="lib", keep_path=False)
         self.copy(pattern="*.so*", dst="lib", src=".", keep_path=False)
-        self.copy(pattern="*.dylib", dst="lib", src="lib", keep_path=False)
+        self.copy(pattern="*.dylib", dst="lib", src=".", keep_path=False)
         self.copy(pattern="*", dst="bin", src="bin", keep_path=False)
 
     def package_info(self):
