@@ -18,6 +18,11 @@ class AzureCSharedUtilityConan(ConanFile):
     def source(self):
         tools.get("https://github.com/Azure/azure-c-shared-utility/archive/2017-08-11.tar.gz")
 
+    def configure(self):
+        # TODO: static library fails on Linux
+        if self.settings.os == "Linux":
+            self.options.shared = True
+
     def requirements(self):
         if self.settings.os == "Linux" or self.settings.os == "Macos":
             self.requires.add("OpenSSL/1.0.2l@conan/stable")
