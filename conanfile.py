@@ -61,4 +61,4 @@ class AzureCSharedUtilityConan(ConanFile):
         self.cpp_info.libs = self.collect_libs()
         if self.settings.os == "Linux":
             self.cpp_info.libs.append("curl")
-            self.cpp_info.libs.append("uuid-dev")
+            self.cpp_info.libs.append("uuid")
