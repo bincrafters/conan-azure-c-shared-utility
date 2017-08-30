@@ -15,6 +15,4 @@ ENDIF(WIN32)
 
 add_executable(iot_c_utility ${iot_c_utility_c_files})
 
-target_link_libraries(iot_c_utility 
-    aziotsharedutil
-)
+target_link_libraries(iot_c_utility ${CONAN_LIBS})
