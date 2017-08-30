@@ -9,7 +9,7 @@ if __name__ == "__main__":
     if platform.system() == "Linux":
         filtered_builds = []
         for settings, options, env_vars, build_requires in builder.builds:
-            if options["azure-c-shared-utility:shared"]:
+            if options["azure-c-shared-utility:shared"] and settings["build_type"] == "Release":
                  filtered_builds.append([settings, options, env_vars, build_requires])
         builder.builds = filtered_builds
     builder.run()
