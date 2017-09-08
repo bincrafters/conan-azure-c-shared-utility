@@ -42,8 +42,6 @@ class AzureCSharedUtilityConan(ConanFile):
     
         cmake_file = "%s/CMakeLists.txt" % self.release_name
         tools.replace_in_file(cmake_file, "project(%s)" % self.lib_short_name, conan_magic_lines)
-        content = tools.load(cmake_file)
-        tools.save(cmake_file, content[0:content.find("if(${use_installed_dependencies})")])
         cmake = CMake(self)
         cmake.definitions["skip_samples"] = True
         cmake.definitions["build_as_dynamic"] = self.options.shared

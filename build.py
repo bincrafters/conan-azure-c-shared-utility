@@ -3,7 +3,7 @@ from conan.packager import ConanMultiPackager
 
 
 if __name__ == "__main__":
-    builder = ConanMultiPackager(username=os.getenv("CONAN_USERNAME"), channel=os.getenv("CONAN_CHANNEL"))
+    builder = ConanMultiPackager()
     builder.add_common_builds(shared_option_name="azure-c-shared-utility:shared", pure_c=True)
     # Skip static library
     if platform.system() == "Linux":
