@@ -13,6 +13,7 @@ class AzureCSharedUtilityConan(ConanFile):
     release_name = "%s-2017-08-11" % name.lower()
     options = {"shared": [True, False]}
     default_options = "shared=True"
+    lib_short_name = "azure_c_shared_utility"
     exports = ["LICENSE", "azure_c_shared_utilityConfig.cmake"]
 
     def source(self):
@@ -34,11 +35,15 @@ class AzureCSharedUtilityConan(ConanFile):
             package_tool.install(packages="libcurl4-gnutls-dev uuid-dev pkg-config", update=True)
 
     def build(self):
-        conan_magic_lines = '''project(azure_c_shared_utility)
+        conan_magic_lines = '''project(%s)
     include(../conanbuildinfo.cmake)
     conan_basic_setup()
-    '''
-        tools.replace_in_file("%s/CMakeLists.txt" % self.release_name, "project(azure_c_shared_utility)", conan_magic_lines)
+    ''' % self.lib_short_name
+    
+        cmake_file = "%s/CMakeLists.txt" % self.release_name
+        tools.replace_in_file(cmake_file, "project(%s)" % self.lib_short_name, conan_magic_lines)
+        content = tools.load(cmake_file)
+        tools.save(cmake_file, content[0:content.find("if(${use_installed_dependencies})")])
         cmake = CMake(self)
         cmake.definitions["skip_samples"] = True
         cmake.definitions["build_as_dynamic"] = self.options.shared
