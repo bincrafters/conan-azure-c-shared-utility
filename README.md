@@ -8,14 +8,14 @@ The packages generated with this **conanfile** can be found in [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install Azure-C-Shared-Utility/2017-08-11@bincrafters/testing
+    $ conan install Azure-C-Shared-Utility/1.0.41@bincrafters/testing
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    Azure-C-Shared-Utility/2017-08-11@bincrafters/testing
+    Azure-C-Shared-Utility/1.0.41@bincrafters/testing
 
     [generators]
     txt
@@ -44,7 +44,7 @@ This is a header only library, so nothing needs to be built.
 
 ## Upload
 
-    $ conan upload Azure-C-Shared-Utility/2017-08-11@bincrafters/testing --all -r bincrafters
+    $ conan upload Azure-C-Shared-Utility/1.0.41@bincrafters/testing --all -r bincrafters
 
 ### License
-[Boost](LICENSE)
+[MIT](LICENSE)
