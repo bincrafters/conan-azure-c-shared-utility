@@ -8,19 +8,23 @@ class AzureCSharedUtilityConan(ConanFile):
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     url = "https://github.com/bincrafters/conan-azure-c-shared-utility"
-    license = "https://github.com/Azure/azure-c-shared-utility/blob/master/LICENSE"
     description = "Azure C SDKs common code"
-    release_name = "%s-2017-08-11" % name.lower()
+    license = "https://github.com/Azure/azure-c-shared-utility/blob/master/LICENSE"
     options = {"shared": [True, False]}
     default_options = "shared=True"
     lib_short_name = "azure_c_shared_utility"
+    release_date = "2017-08-11"
+    release_name = "%s-%s" % (name.lower(), release_date)
     exports = ["LICENSE", "azure_c_shared_utilityConfig.cmake"]
 
     def source(self):
-        tools.get("https://github.com/Azure/azure-c-shared-utility/archive/2017-08-11.tar.gz")
+        tools.get("%s/archive/%s.tar.gz" % (self.source_url, self.release_date))
 
     def configure(self):
         # TODO: static library fails on Linux
+        if self.settings.os == "Windows" and self.settings.compiler == "Visual Studio":
+            self.options.shared = False
+
         if self.settings.os == "Linux":
             self.options.shared = True
 
