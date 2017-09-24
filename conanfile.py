@@ -23,8 +23,6 @@ class AzureCSharedUtilityConan(ConanFile):
 
     def configure(self):
         # TODO: static library fails on Linux
-        if self.settings.os == "Windows" and self.settings.compiler == "Visual Studio":
-            self.options.shared = False
 
         if self.settings.os == "Linux":
             self.options.shared = True
