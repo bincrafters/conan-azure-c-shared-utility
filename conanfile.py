@@ -39,7 +39,7 @@ class AzureCSharedUtilityConan(ConanFile):
     include(../conanbuildinfo.cmake)
     conan_basic_setup()
     ''' % self.lib_short_name
-    
+
         cmake_file = "%s/CMakeLists.txt" % self.release_name
         tools.replace_in_file(cmake_file, "project(%s)" % self.lib_short_name, conan_magic_lines)
         cmake = CMake(self)
@@ -61,7 +61,7 @@ class AzureCSharedUtilityConan(ConanFile):
         self.copy(pattern="*", dst="bin", src="bin", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = self.collect_libs()
+        self.cpp_info.libs = tools.collect_libs(self)
         if self.settings.os == "Linux":
             self.cpp_info.libs.append("curl")
             self.cpp_info.libs.append("uuid")
