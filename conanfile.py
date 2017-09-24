@@ -18,7 +18,8 @@ class AzureCSharedUtilityConan(ConanFile):
     exports = ["LICENSE", "azure_c_shared_utilityConfig.cmake"]
 
     def source(self):
-        tools.get("%s/archive/%s.tar.gz" % (self.source_url, self.release_date))
+        source_url = "https://github.com/Azure/azure-c-shared-utility"
+        tools.get("%s/archive/%s.tar.gz" % (source_url, self.release_date))
 
     def configure(self):
         # TODO: static library fails on Linux
