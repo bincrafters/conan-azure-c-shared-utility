@@ -1,4 +1,3 @@
-import platform
 from conan.packager import ConanMultiPackager, os, re
 
 
@@ -25,10 +24,4 @@ if __name__ == "__main__":
 
     builder = ConanMultiPackager(args="--build missing")
     builder.add_common_builds()
-
-    # Build clang + libc++
-    for settings, options, env_vars, build_requires in builder.builds:
-        if settings["compiler"] == "clang" and platform.system() == "Linux":
-            settings["compiler.libcxx"] = "libc++"
-
     builder.run()
