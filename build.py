@@ -23,5 +23,5 @@ if __name__ == "__main__":
         os.environ["CONAN_REMOTES"]="https://api.bintray.com/conan/conan-community/conan"
 
     builder = ConanMultiPackager(args="--build missing", archs=["x86_64"])
-    builder.add_common_builds()
+    builder.add_common_builds(shared_option_name="Azure-C-Shared-Utility:shared")
     builder.run()
