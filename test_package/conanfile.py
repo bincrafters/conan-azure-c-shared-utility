@@ -20,4 +20,4 @@ class TestPackageConan(ConanFile):
         self.copy("*.so*", dst="bin", src="lib")        
         
     def test(self):
-        self.run(os.path.join("bin","iot_c_utility"))
+        self.run(os.path.join("bin","test_package"))

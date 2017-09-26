@@ -21,12 +21,6 @@ class AzureCSharedUtilityConan(ConanFile):
         source_url = "https://github.com/Azure/azure-c-shared-utility"
         tools.get("%s/archive/%s.tar.gz" % (source_url, self.release_date))
 
-    def configure(self):
-        # TODO: static library fails on Linux
-
-        if self.settings.os == "Linux":
-            self.options.shared = True
-
     def requirements(self):
         if self.settings.os == "Linux" or self.settings.os == "Macos":
             self.requires.add("OpenSSL/1.0.2l@conan/stable")
@@ -35,7 +29,7 @@ class AzureCSharedUtilityConan(ConanFile):
         # libcurl and uuid are required on Linux
         if self.settings.os == "Linux":
             package_tool = tools.SystemPackageTool()
-            package_tool.install(packages="libcurl4-gnutls-dev uuid-dev pkg-config", update=True)
+            package_tool.install(packages="libcurl4-gnutls-dev uuid-dev pkg-config")
 
     def build(self):
         conan_magic_lines = '''project(%s)
@@ -68,3 +62,4 @@ class AzureCSharedUtilityConan(ConanFile):
         if self.settings.os == "Linux":
             self.cpp_info.libs.append("curl")
             self.cpp_info.libs.append("uuid")
+            self.cpp_info.libs.append("m")

@@ -1,34 +1,21 @@
-#Copyright (c) Microsoft. All rights reserved.
-#Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-cmake_minimum_required(VERSION 2.8.11)
 project(test_package)
+cmake_minimum_required(VERSION 2.8.11)
+
+set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-macro(compileAsC99)
-  if (CMAKE_VERSION VERSION_LESS "3.1")
-    if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
-      set (CMAKE_C_FLAGS "--std=c99 ${CMAKE_C_FLAGS}")
-      if (CXX_FLAG_CXX11)
-        set (CMAKE_CXX_FLAGS "--std=c++11 ${CMAKE_CXX_FLAGS}")
-      else()
-        set (CMAKE_CXX_FLAGS "--std=c++0x ${CMAKE_CXX_FLAGS}")
-      endif()
-    endif()
-  else()
-    set (CMAKE_C_STANDARD 99)
-    set (CMAKE_CXX_STANDARD 11)
-  endif()
-endmacro(compileAsC99)
+file(GLOB SOURCE_FILES *.c)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
-function(add_sample_directory whatIsBuilding)
-    add_subdirectory(${whatIsBuilding})
+add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 
-    set_target_properties(${whatIsBuilding}
-               PROPERTIES
-               FOLDER "C-Utility_Samples")
-endfunction()
+IF(WIN32)
+	set(OS_LINK_LIBS crypt32 ws2_32 secur32 advapi32 ncrypt winhttp)
+ENDIF(WIN32)
 
-add_sample_directory(iot_c_utility)
+target_link_libraries(${CMAKE_PROJECT_NAME} ${CONAN_LIBS} ${OS_LINK_LIBS} )
+#    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+#    add_definitions(-DGB_MEASURE_MEMORY_FOR_THIS -DGB_DEBUG_ALLOC)
+
