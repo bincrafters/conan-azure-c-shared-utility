@@ -16,6 +16,5 @@ IF(WIN32)
 ENDIF(WIN32)
 
 target_link_libraries(${CMAKE_PROJECT_NAME} ${CONAN_LIBS} ${OS_LINK_LIBS} )
-#    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-#    add_definitions(-DGB_MEASURE_MEMORY_FOR_THIS -DGB_DEBUG_ALLOC)
+
 
