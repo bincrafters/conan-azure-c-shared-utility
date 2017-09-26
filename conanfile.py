@@ -21,6 +21,10 @@ class AzureCSharedUtilityConan(ConanFile):
         source_url = "https://github.com/Azure/azure-c-shared-utility"
         tools.get("%s/archive/%s.tar.gz" % (source_url, self.release_date))
 
+    def configure(self):
+        if self.settings.compiler == "Visual Studio":
+            self.options.shared = True
+
     def requirements(self):
         if self.settings.os == "Linux" or self.settings.os == "Macos":
             self.requires.add("OpenSSL/1.0.2l@conan/stable")

@@ -28,8 +28,10 @@ if __name__ == "__main__":
     # Skip MT on Visual Studio
     filtered_builds = []
     for settings, options, env_vars, build_requires in builder.builds:
-        if settings["compiler"] != "Visual Studio" or not "MT" in settings["compiler.runtime"]:
-            filtered_builds.append([settings, options, env_vars, build_requires])
+        if settings["compiler"] == "Visual Studio":
+            if "MT" in settings["compiler.runtime"]:
+                continue
+        filtered_builds.append([settings, options, env_vars, build_requires])
     builder.builds = filtered_builds
 
     builder.run()
