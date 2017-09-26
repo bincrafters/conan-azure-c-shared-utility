@@ -17,4 +17,3 @@ ENDIF(WIN32)
 
 target_link_libraries(${CMAKE_PROJECT_NAME} ${CONAN_LIBS} ${OS_LINK_LIBS} )
 
-
