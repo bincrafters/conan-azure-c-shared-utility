@@ -29,7 +29,7 @@ class AzureCSharedUtilityConan(ConanFile):
         # libcurl and uuid are required on Linux
         if self.settings.os == "Linux":
             package_tool = tools.SystemPackageTool()
-            package_tool.install(packages="libcurl4-gnutls-dev uuid-dev pkg-config", update=True)
+            package_tool.install(packages="libcurl4-gnutls-dev uuid-dev pkg-config")
 
     def build(self):
         conan_magic_lines = '''project(%s)
