@@ -7,6 +7,7 @@ include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
 file(GLOB SOURCE_FILES *.c)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY C_STANDARD 99)

@@ -22,9 +22,7 @@ class AzureCSharedUtilityConan(ConanFile):
         tools.get("%s/archive/%s.tar.gz" % (source_url, self.release_date))
 
     def configure(self):
-        # TODO: static library fails on Linux
-
-        if self.settings.os == "Linux":
+        if self.settings.compiler == "Visual Studio":
             self.options.shared = True
 
     def requirements(self):
@@ -68,3 +66,4 @@ class AzureCSharedUtilityConan(ConanFile):
         if self.settings.os == "Linux":
             self.cpp_info.libs.append("curl")
             self.cpp_info.libs.append("uuid")
+            self.cpp_info.libs.append("m")

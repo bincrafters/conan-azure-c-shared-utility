@@ -23,5 +23,15 @@ if __name__ == "__main__":
         os.environ["CONAN_REMOTES"]="https://api.bintray.com/conan/conan-community/conan"
 
     builder = ConanMultiPackager(args="--build missing", archs=["x86_64"])
-    builder.add_common_builds()
+    builder.add_common_builds(shared_option_name="Azure-C-Shared-Utility:shared")
+
+    # Skip MT on Visual Studio
+    filtered_builds = []
+    for settings, options, env_vars, build_requires in builder.builds:
+        if settings["compiler"] == "Visual Studio":
+            if "MT" in settings["compiler.runtime"]:
+                continue
+        filtered_builds.append([settings, options, env_vars, build_requires])
+    builder.builds = filtered_builds
+
     builder.run()
