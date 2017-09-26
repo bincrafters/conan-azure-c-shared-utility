@@ -11,12 +11,12 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY C_STANDARD 99)
-target_link_libraries(${CMAKE_PROJECT_NAME} 
-	crypt32 ws2_32 secur32 advapi32 ncrypt winhttp
-	${CONAN_LIBS})
 
-#IF(WIN32)
+IF(WIN32)
+	set(OS_LINK_LIBS crypt32 ws2_32 secur32 advapi32 ncrypt winhttp)
+ENDIF(WIN32)
+
+target_link_libraries(${CMAKE_PROJECT_NAME} ${CONAN_LIBS} ${OS_LINK_LIBS} )
 #    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 #    add_definitions(-DGB_MEASURE_MEMORY_FOR_THIS -DGB_DEBUG_ALLOC)
-#ENDIF(WIN32)
 
