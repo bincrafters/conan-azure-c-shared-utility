@@ -17,4 +17,9 @@ class TestPackageConan(ConanFile):
         self.copy("*.so*", dst="bin", src="lib")        
         
     def test(self):
-        self.run(os.path.join("bin","test_package"))
+        os.chdir("bin")
+        try:
+            self.run("ulimit -c unlimited")
+            self.run("./test_package")
+        except:
+            self.run('gdb --batch --quiet -ex "thread apply all bt full" -ex "quit" test_package  core')
