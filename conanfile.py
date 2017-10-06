@@ -26,7 +26,6 @@ class AzureCSharedUtilityConan(ConanFile):
             self.requires.add("OpenSSL/1.0.2l@conan/stable")
 
     def system_requirements(self):
-        # libcurl and uuid are required on Linux
         if self.settings.os == "Linux":
             package_tool = tools.SystemPackageTool()
             package_tool.install(packages="libcurl4-gnutls-dev uuid-dev pkg-config")
