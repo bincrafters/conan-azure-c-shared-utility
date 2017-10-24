@@ -65,3 +65,6 @@ class AzureCSharedUtilityConan(ConanFile):
         elif self.settings.os == "Windows":
             self.cpp_info.libs.append("wsock32")
             self.cpp_info.libs.append("ws2_32")
+            self.cpp_info.libs.append("Secur32")
+            self.cpp_info.libs.append("Ncrypt")
+            self.cpp_info.libs.append("Crypt32")
