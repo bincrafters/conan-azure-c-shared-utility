@@ -1,6 +1,6 @@
 variables:
   CONAN_USERNAME: "bincrafters"
-  CONAN_REFERENCE: "Azure-C-Shared-Utility/1.0.43"
+  CONAN_REFERENCE: "Azure-C-Shared-Utility/1.0.46"
   CONAN_CHANNEL: "ci"
 
 .conan-run: &conan-run
