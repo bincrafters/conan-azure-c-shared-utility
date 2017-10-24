@@ -62,3 +62,6 @@ class AzureCSharedUtilityConan(ConanFile):
             self.cpp_info.libs.append("curl")
             self.cpp_info.libs.append("uuid")
             self.cpp_info.libs.append("m")
+        elif self.settings.os == "Windows":
+            self.cpp_info.libs.append("wsock32")
+            self.cpp_info.libs.append("ws2_32")
