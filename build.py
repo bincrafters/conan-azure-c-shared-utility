@@ -24,6 +24,6 @@ if __name__ == "__main__":
         os.environ["CONAN_STABLE_BRANCH_PATTERN"] = "stable/*"
         os.environ["CONAN_UPLOAD_ONLY_WHEN_STABLE"] = "TRUE"
 
-    builder = ConanMultiPackager(args="--build missing", archs=["x86_64"], build_types=["Release"])
+    builder = ConanMultiPackager(args="--build missing")
     builder.add_common_builds(shared_option_name="Azure-C-Shared-Utility:shared")
     builder.run()
