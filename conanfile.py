@@ -50,9 +50,9 @@ class AzureCSharedUtilityConan(ConanFile):
     def package(self):
         self.copy(pattern="LICENSE", dst=".", src=".")
         self.copy(pattern="*", dst="include", src=path.join(self.release_name, "inc"))
-        self.copy(pattern="azure_c_shared_utilityConfig.cmake", dst="res", src=".")
-        self.copy(pattern="azure_c_shared_utilityFunctions.cmake", dst="res", src=path.join(self.release_name, "configs"))
-        self.copy(pattern="azure_iot_build_rules.cmake", dst="res", src=path.join(self.release_name, "configs"))
+        self.copy(pattern="azure_c_shared_utilityConfig.cmake", dst=path.join("res", "deps", "c-utility", "configs"), src=".")
+        self.copy(pattern="azure_c_shared_utilityFunctions.cmake", dst=path.join("res", "deps", "c-utility", "configs"), src=path.join(self.release_name, "configs"))
+        self.copy(pattern="azure_iot_build_rules.cmake", dst=path.join("res", "deps", "c-utility", "configs"), src=path.join(self.release_name, "configs"))
         self.copy(pattern="*.lib", dst="lib", src="lib", keep_path=False)
         self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
         self.copy(pattern="*.a", dst="lib", src="lib", keep_path=False)
