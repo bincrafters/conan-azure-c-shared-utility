@@ -23,12 +23,15 @@ class AzureCSharedUtilityConan(ConanFile):
 
     def requirements(self):
         if self.settings.os == "Linux" or self.settings.os == "Macos":
-            self.requires.add("OpenSSL/1.0.2l@conan/stable")
+            self.requires.add("libcurl/7.50.3@lasote/stable")
+            self.requires.add("OpenSSL/1.0.2l@conan/stable", override=True)
+            self.requires.add("zlib/1.2.11@conan/stable", override=True)
 
     def system_requirements(self):
         if self.settings.os == "Linux":
             package_tool = tools.SystemPackageTool()
-            package_tool.install(packages="libcurl4-gnutls-dev uuid-dev pkg-config")
+            arch = "amd64" if self.settings.arch == "x86_64" else "i386"
+            package_tool.install(packages="uuid-dev:%s pkg-config" % arch)
 
     def build(self):
         conan_magic_lines = '''project(%s)
@@ -59,6 +62,5 @@ class AzureCSharedUtilityConan(ConanFile):
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
         if self.settings.os == "Linux":
-            self.cpp_info.libs.append("curl")
             self.cpp_info.libs.append("uuid")
             self.cpp_info.libs.append("m")
