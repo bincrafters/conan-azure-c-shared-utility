@@ -25,10 +25,6 @@ class AzureCSharedUtilityConan(ConanFile):
         if self.settings.os == "Linux" or self.settings.os == "Macos":
             self.requires.add("libcurl/7.50.3@lasote/stable")
 
-    def configure(self):
-        if self.settings.os == "Linux" or self.settings.os == "Macos":
-            self.options["zlib"].shared = self.options.shared
-
     def system_requirements(self):
         if self.settings.os == "Linux":
             package_tool = tools.SystemPackageTool()
