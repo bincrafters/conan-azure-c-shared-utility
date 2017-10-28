@@ -65,7 +65,10 @@ class AzureCSharedUtilityConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
-        if self.settings.os == "Windows":
+        if self.settings.os == "Linux":
+            self.cpp_info.libs.append("uuid")
+            self.cpp_info.libs.append("m")
+        elif self.settings.os == "Windows":
             self.cpp_info.libs.append("wsock32")
             self.cpp_info.libs.append("ws2_32")
             self.cpp_info.libs.append("Secur32")
