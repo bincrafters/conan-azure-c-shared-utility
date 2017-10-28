@@ -23,7 +23,9 @@ class AzureCSharedUtilityConan(ConanFile):
 
     def requirements(self):
         if self.settings.os == "Linux" or self.settings.os == "Macos":
+            self.requires.add("OpenSSL/1.0.2l@conan/stable")
             self.requires.add("libcurl/7.50.3@lasote/stable")
+            self.requires.add("zlib/1.2.11@conan/stable")
 
     def system_requirements(self):
         if self.settings.os == "Linux":
@@ -36,12 +38,15 @@ class AzureCSharedUtilityConan(ConanFile):
     include(../conanbuildinfo.cmake)
     conan_basic_setup()
     ''' % self.lib_short_name
-
         cmake_file = "%s/CMakeLists.txt" % self.release_name
         tools.replace_in_file(cmake_file, "project(%s)" % self.lib_short_name, conan_magic_lines)
-        cmake = CMake(self, parallel=False)
+        if self.settings.os == "Linux":
+            magic_line = "target_link_libraries(aziotsharedutil ${CONAN_LIBS} uuid m)"
+            tools.replace_in_file(cmake_file, "target_link_libraries(aziotsharedutil ${aziotsharedutil_target_libs})", magic_line)
+        cmake = CMake(self)
+        cmake.verbose = True
         cmake.definitions["skip_samples"] = True
-        cmake.definitions["build_as_dynamic"] = self.options.shared
+        cmake.definitions["build_as_dynamic"] = self.settings.os == "Windows" and self.options.shared
         cmake.configure(source_dir=self.release_name)
         cmake.build()
 
@@ -60,10 +65,7 @@ class AzureCSharedUtilityConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
-        if self.settings.os == "Linux":
-            self.cpp_info.libs.append("uuid")
-            self.cpp_info.libs.append("m")
-        elif self.settings.os == "Windows":
+        if self.settings.os == "Windows":
             self.cpp_info.libs.append("wsock32")
             self.cpp_info.libs.append("ws2_32")
             self.cpp_info.libs.append("Secur32")
