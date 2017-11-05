@@ -21,17 +21,16 @@ class AzureCSharedUtilityConan(ConanFile):
         source_url = "https://github.com/Azure/azure-c-shared-utility"
         tools.get("%s/archive/%s.tar.gz" % (source_url, self.release_date))
 
+    def configure(self):
+        del self.settings.compiler.libcxx
+
     def requirements(self):
         if self.settings.os == "Linux" or self.settings.os == "Macos":
             self.requires.add("OpenSSL/1.0.2l@conan/stable")
             self.requires.add("libcurl/7.50.3@lasote/stable")
-            self.requires.add("zlib/1.2.11@conan/stable")
-
-    def system_requirements(self):
+            self.requires.add("zlib/1.2.11@conan/stable", override=True)
         if self.settings.os == "Linux":
-            package_tool = tools.SystemPackageTool()
-            arch = "amd64" if self.settings.arch == "x86_64" else "i386"
-            package_tool.install(packages="uuid-dev:%s pkg-config" % arch)
+            self.requires.add("libuuid/1.0.3@%s/stable" % self.user)
 
     def build(self):
         conan_magic_lines = '''project(%s)
@@ -40,9 +39,6 @@ class AzureCSharedUtilityConan(ConanFile):
     ''' % self.lib_short_name
         cmake_file = "%s/CMakeLists.txt" % self.release_name
         tools.replace_in_file(cmake_file, "project(%s)" % self.lib_short_name, conan_magic_lines)
-        if self.settings.os == "Linux":
-            magic_line = "target_link_libraries(aziotsharedutil ${CONAN_LIBS} uuid m)"
-            tools.replace_in_file(cmake_file, "target_link_libraries(aziotsharedutil ${aziotsharedutil_target_libs})", magic_line)
         cmake = CMake(self)
         cmake.verbose = True
         cmake.definitions["skip_samples"] = True
@@ -66,7 +62,6 @@ class AzureCSharedUtilityConan(ConanFile):
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
         if self.settings.os == "Linux":
-            self.cpp_info.libs.append("uuid")
             self.cpp_info.libs.append("m")
         elif self.settings.os == "Windows":
             self.cpp_info.libs.append("wsock32")
