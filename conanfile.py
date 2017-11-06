@@ -11,7 +11,7 @@ class AzureCSharedUtilityConan(ConanFile):
     description = "Azure C SDKs common code"
     license = "https://github.com/Azure/azure-c-shared-utility/blob/master/LICENSE"
     options = {"shared": [True, False]}
-    default_options = "shared=True"
+    default_options = "shared=False"
     lib_short_name = "azure_c_shared_utility"
     release_date = "2017-10-20"
     release_name = "%s-%s" % (name.lower(), release_date)
