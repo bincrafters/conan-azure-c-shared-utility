@@ -42,7 +42,7 @@ class AzureCSharedUtilityConan(ConanFile):
         conan_magic_lines = "target_link_libraries(aziotsharedutil ${aziotsharedutil_target_libs} ${CONAN_LIBS})"
         tools.replace_in_file(cmake_file, "target_link_libraries(aziotsharedutil ${aziotsharedutil_target_libs})", conan_magic_lines)
         cmake = CMake(self)
-        cmake.verbose = True
+        cmake.fpic = True
         cmake.definitions["skip_samples"] = True
         cmake.definitions["build_as_dynamic"] = self.settings.os == "Windows" and self.options.shared
         cmake.configure(source_dir=self.release_name)
