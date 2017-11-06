@@ -39,6 +39,8 @@ class AzureCSharedUtilityConan(ConanFile):
     ''' % self.lib_short_name
         cmake_file = "%s/CMakeLists.txt" % self.release_name
         tools.replace_in_file(cmake_file, "project(%s)" % self.lib_short_name, conan_magic_lines)
+        conan_magic_lines = "target_link_libraries(aziotsharedutil ${aziotsharedutil_target_libs} ${CONAN_LIBS})"
+        tools.replace_in_file(cmake_file, "target_link_libraries(aziotsharedutil ${aziotsharedutil_target_libs})", conan_magic_lines)
         cmake = CMake(self)
         cmake.verbose = True
         cmake.definitions["skip_samples"] = True
