@@ -7,7 +7,7 @@ from conans import ConanFile, CMake, tools
 
 class AzureCSharedUtilityConan(ConanFile):
     name = "azure-c-shared-utility"
-    version = "1.0.43"
+    version = "1.0.49"
     url = "https://github.com/bincrafters/conan-azure-c-shared-utility"
     description = "Azure C SDKs common code"
     license = "MIT"
