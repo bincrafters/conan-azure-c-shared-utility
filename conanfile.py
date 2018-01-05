@@ -1,21 +1,24 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from os import path
 from conans import ConanFile, CMake, tools
 
 
 class AzureCSharedUtilityConan(ConanFile):
-    name = "Azure-C-Shared-Utility"
+    name = "azure-c-shared-utility"
     version = "1.0.43"
-    generators = "cmake"
-    settings = "os", "arch", "compiler", "build_type"
     url = "https://github.com/bincrafters/conan-azure-c-shared-utility"
     description = "Azure C SDKs common code"
-    license = "https://github.com/Azure/azure-c-shared-utility/blob/master/LICENSE"
+    license = "MIT"
+    exports = ["LICENSE.md", "azure_c_shared_utilityConfig.cmake"]
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False]}
     default_options = "shared=True"
     lib_short_name = "azure_c_shared_utility"
     release_date = "2017-09-08"
     release_name = "%s-%s" % (name.lower(), release_date)
-    exports = ["LICENSE", "azure_c_shared_utilityConfig.cmake"]
 
     def source(self):
         source_url = "https://github.com/Azure/azure-c-shared-utility"
@@ -39,7 +42,7 @@ class AzureCSharedUtilityConan(ConanFile):
 
         cmake_file = "%s/CMakeLists.txt" % self.release_name
         tools.replace_in_file(cmake_file, "project(%s)" % self.lib_short_name, conan_magic_lines)
-        cmake = CMake(self)
+        cmake = CMake(self, parallel=False)
         cmake.definitions["skip_samples"] = True
         cmake.definitions["build_as_dynamic"] = self.options.shared
         cmake.configure(source_dir=self.release_name)
