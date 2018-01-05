@@ -19,7 +19,7 @@ class AzureCSharedUtilityConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False]}
     default_options = "shared=True"
-    requires = "libcurl/[>=7.56.1]@bincrafters/stable"
+    
     
     def source(self):
         source_url = "https://github.com/Azure/azure-c-shared-utility"
@@ -28,8 +28,10 @@ class AzureCSharedUtilityConan(ConanFile):
         os.rename(extracted_dir, self.source_subfolder)
         
     def requirements(self):
-        if self.settings.os == "Linux" or self.settings.os == "Macos":
-            self.requires.add("OpenSSL/1.0.2l@conan/stable")
+        if self.settings.compiler != "Visual Studio":
+            self.requires.add("OpenSSL/[>=1.0.2l]@conan/stable")
+            self.requires.add("libcurl/[>=7.56.1]@bincrafters/stable")
+            self.requires.add("libuuid/[>=1.0.3]@bincrafters/stable")
 
     def build(self):
         cmake = CMake(self, parallel=False)
