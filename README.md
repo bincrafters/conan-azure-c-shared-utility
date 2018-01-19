@@ -1,8 +1,8 @@
 ## Package Status
 
-| Bintray | Appveyor | Travis | 
+| Bintray | Appveyor | Travis |
 |---------|-----------|--------|
-|BINTRAY_BADGE_URL|APPVEYOR_BADGE_URL|TRAVIS_BADGE_URL|
+|[![Download](https://api.bintray.com/packages/bincrafters/public-conan/azure-c-shared-utility%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/azure-c-shared-utility%3Abincrafters/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/azure-c-shared-utility?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-azure-c-shared-utility)|[![Build Status](https://travis-ci.org/bincrafters/conan-azure-c-shared-utility.svg?)](https://travis-ci.org/bincrafters/conan-azure-c-shared-utility)|
 
 ## Conan.io Information
 
