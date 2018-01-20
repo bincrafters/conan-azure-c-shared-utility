@@ -7,8 +7,8 @@ from conans import ConanFile, CMake, tools
 
 class AzureCSharedUtilityConan(ConanFile):
     name = "azure-c-shared-utility"
-    version = "1.0.49"
-    release_date = "2017-12-14"
+    version = "1.0.50"
+    git_tag = "2018-01-12"
     url = "https://github.com/bincrafters/conan-azure-c-shared-utility"
     description = "Azure C SDKs common code"
     license = "MIT"
@@ -23,8 +23,8 @@ class AzureCSharedUtilityConan(ConanFile):
     
     def source(self):
         source_url = "https://github.com/Azure/azure-c-shared-utility"
-        tools.get("{0}/archive/{1}.tar.gz".format(source_url, self.release_date))
-        extracted_dir = self.name + "-" + self.release_date
+        tools.get("{0}/archive/{1}.tar.gz".format(source_url, self.git_tag))
+        extracted_dir = self.name + "-" + self.git_tag
         os.rename(extracted_dir, self.source_subfolder)
         
     def requirements(self):
