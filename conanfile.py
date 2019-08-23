@@ -15,17 +15,17 @@ class AzureCSharedUtilityConan(ConanFile):
     exports = ["LICENSE.md", "azure_c_shared_utilityConfig.cmake"]
     exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
-    source_subfolder = "source_subfolder"
+    _source_subfolder = "source_subfolder"
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False]}
-    default_options = "shared=True"
+    default_options = {'shared': 'True'}
     
     
     def source(self):
         source_url = "https://github.com/Azure/azure-c-shared-utility"
         tools.get("{0}/archive/{1}.tar.gz".format(source_url, self.git_tag))
         extracted_dir = self.name + "-" + self.git_tag
-        os.rename(extracted_dir, self.source_subfolder)
+        os.rename(extracted_dir, self._source_subfolder)
         
     def requirements(self):
         if self.settings.compiler != "Visual Studio":
@@ -41,8 +41,8 @@ class AzureCSharedUtilityConan(ConanFile):
         cmake.build()
 
     def package(self):
-        configs_folder = os.path.join(self.source_subfolder, "configs")
-        include_folder = os.path.join(self.source_subfolder, "inc")
+        configs_folder = os.path.join(self._source_subfolder, "configs")
+        include_folder = os.path.join(self._source_subfolder, "inc")
         self.copy(pattern="LICENSE", dst=".", src=".")
         self.copy(pattern="*", dst="include", src=include_folder)
         self.copy(pattern="azure_c_shared_utilityConfig.cmake", dst="res", src=".")
